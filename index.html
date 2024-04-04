@@ -3,9 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Texte</title>
+    <title>Disponibilité de la chambre</title>
+    <style>
+        body {
+            background-color: rgba(255, 255, 255, 0.8); /* Fond blanc avec transparence */
+        }
+        .circle {
+            width: 20px; 
+            height: 20px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .available {
+            background-color: green;
+        }
+        .unavailable {
+            background-color: red;
+        }
+    </style>
 </head>
 <body>
-    <p>Ceci est le texte que je veux afficher dans WorkAdventure.</p>
+    <h1 id="room">Chambre n°</h1>
+    <div id="status"><span class="circle"></span></div>
+
+    <script>
+        // Fonction pour récupérer les paramètres de l'URL
+        function getQueryParam(param) {
+            var search = window.location.search.substring(1);
+            var params = new URLSearchParams(search);
+            return params.get(param);
+        }
+
+        // Récupère roomId et isAvailable de l'URL
+        var roomId = getQueryParam('roomId');
+        var isAvailable = getQueryParam('isAvailable') === 'true'; // Convertit la chaîne en booléen
+
+        // Met à jour le contenu de la page
+        document.getElementById('room').innerText = 'Chambre n° ' + roomId;
+        var statusElement = document.getElementById('status').firstElementChild;
+        if (isAvailable) {
+            statusElement.classList.add('available');
+        } else {
+            statusElement.classList.add('unavailable');
+        }
+    </script>
 </body>
 </html>
